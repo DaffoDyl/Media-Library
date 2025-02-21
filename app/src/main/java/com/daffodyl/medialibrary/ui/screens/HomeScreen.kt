@@ -15,6 +15,7 @@ import com.daffodyl.medialibrary.ui.components.MediaBox
 fun HomeScreen(
     goToBoardGames: () -> Unit,
     goToBooks: () -> Unit,
+    goToMovies: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -27,7 +28,7 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MediaBox(modifier, "Books", goToBooks)
-            MediaBox(modifier, "Movies", goToBoardGames)
+            MediaBox(modifier, "Movies", goToMovies)
         }
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),

@@ -23,7 +23,10 @@ import com.daffodyl.medialibrary.ui.screens.BookScreen
 import com.daffodyl.medialibrary.ui.screens.BooksScreen
 import com.daffodyl.medialibrary.ui.screens.CreateBookScreen
 import com.daffodyl.medialibrary.ui.screens.CreateBoardGameScreen
+import com.daffodyl.medialibrary.ui.screens.CreateMovieScreen
 import com.daffodyl.medialibrary.ui.screens.HomeScreen
+import com.daffodyl.medialibrary.ui.screens.MovieScreen
+import com.daffodyl.medialibrary.ui.screens.MoviesScreen
 import com.daffodyl.medialibrary.ui.theme.MediaLibraryTheme
 
 class MainActivity : ComponentActivity() {
@@ -55,6 +58,7 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 goToBoardGames = { navController.navigate(Destinations.BoardGames) },
                                 goToBooks = { navController.navigate(Destinations.Books) },
+                                goToMovies = { navController.navigate(Destinations.Movies) },
                             )
                         }
                         // Board Games
@@ -94,6 +98,26 @@ class MainActivity : ComponentActivity() {
                         composable<Destinations.CreateBook> {
                             CreateBookScreen(
                                 id = it.toRoute<Destinations.CreateBook>().bookId,
+                                goBack = { navController.popBackStack() },
+                            )
+                        }
+                        // Movies
+                        composable<Destinations.Movies> {
+                            MoviesScreen(
+                                goToMovie = { id -> navController.navigate(Destinations.Movie(id)) },
+                                goToCreateMovie = { id -> navController.navigate(Destinations.CreateMovie(id)) },
+                            )
+                        }
+                        composable<Destinations.Movie> {
+                            MovieScreen(
+                                id = it.toRoute<Destinations.Movie>().movieId,
+                                goBack = { navController.popBackStack() },
+                                goToCreateMovie = { id -> navController.navigate(Destinations.CreateMovie(id)) },
+                            )
+                        }
+                        composable<Destinations.CreateMovie> {
+                            CreateMovieScreen(
+                                id = it.toRoute<Destinations.CreateMovie>().movieId,
                                 goBack = { navController.popBackStack() },
                             )
                         }

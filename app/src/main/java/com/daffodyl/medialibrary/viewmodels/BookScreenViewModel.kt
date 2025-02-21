@@ -34,7 +34,7 @@ class BookScreenViewModel(
     fun deleteBook() {
         if (bookId != null) {
             viewModelScope.launch(Dispatchers.Default) {
-                BooksRepository.deleteBook(bookId)
+                booksRepository.deleteBook(bookId)
             }
         }
     }
@@ -42,7 +42,7 @@ class BookScreenViewModel(
     init {
         if (bookId != null) {
             viewModelScope.launch(Dispatchers.Default) {
-                BooksRepository.books.collect { books ->
+                booksRepository.books.collect { books ->
                     val book = books.find { it.id == bookId }
                     if (book != null) {
                         _title.value = book.title
