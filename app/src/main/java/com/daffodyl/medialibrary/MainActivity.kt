@@ -24,9 +24,12 @@ import com.daffodyl.medialibrary.ui.screens.BooksScreen
 import com.daffodyl.medialibrary.ui.screens.CreateBookScreen
 import com.daffodyl.medialibrary.ui.screens.CreateBoardGameScreen
 import com.daffodyl.medialibrary.ui.screens.CreateMovieScreen
+import com.daffodyl.medialibrary.ui.screens.CreateVideoGameScreen
 import com.daffodyl.medialibrary.ui.screens.HomeScreen
 import com.daffodyl.medialibrary.ui.screens.MovieScreen
 import com.daffodyl.medialibrary.ui.screens.MoviesScreen
+import com.daffodyl.medialibrary.ui.screens.VideoGameScreen
+import com.daffodyl.medialibrary.ui.screens.VideoGamesScreen
 import com.daffodyl.medialibrary.ui.theme.MediaLibraryTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,6 +62,7 @@ class MainActivity : ComponentActivity() {
                                 goToBoardGames = { navController.navigate(Destinations.BoardGames) },
                                 goToBooks = { navController.navigate(Destinations.Books) },
                                 goToMovies = { navController.navigate(Destinations.Movies) },
+                                goToVideoGames = { navController.navigate(Destinations.VideoGames) }
                             )
                         }
                         // Board Games
@@ -118,6 +122,26 @@ class MainActivity : ComponentActivity() {
                         composable<Destinations.CreateMovie> {
                             CreateMovieScreen(
                                 id = it.toRoute<Destinations.CreateMovie>().movieId,
+                                goBack = { navController.popBackStack() },
+                            )
+                        }
+                        // Video Games
+                        composable<Destinations.VideoGames> {
+                            VideoGamesScreen(
+                                goToVideoGame = { id -> navController.navigate(Destinations.VideoGame(id)) },
+                                goToCreateVideoGame = { id -> navController.navigate(Destinations.CreateVideoGame(id)) },
+                            )
+                        }
+                        composable<Destinations.VideoGame> {
+                            VideoGameScreen(
+                                id = it.toRoute<Destinations.VideoGame>().videoGameId,
+                                goBack = { navController.popBackStack() },
+                                goToCreateVideoGame = { id -> navController.navigate(Destinations.CreateVideoGame(id)) },
+                            )
+                        }
+                        composable<Destinations.CreateVideoGame> {
+                            CreateVideoGameScreen(
+                                id = it.toRoute<Destinations.CreateVideoGame>().videoGameId,
                                 goBack = { navController.popBackStack() },
                             )
                         }

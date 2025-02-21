@@ -16,6 +16,7 @@ fun HomeScreen(
     goToBoardGames: () -> Unit,
     goToBooks: () -> Unit,
     goToMovies: () -> Unit,
+    goToVideoGames: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -34,7 +35,7 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MediaBox(modifier, "Board Games", goToBoardGames)
-            MediaBox(modifier, "Video Games", goToBoardGames)
+            MediaBox(modifier, "Video Games", goToVideoGames)
         }
     }
 }
