@@ -1,4 +1,4 @@
 package com.daffodyl.medialibrary.repositories
 
-object BookRepository {
+object VideoGamesRepository {
 }

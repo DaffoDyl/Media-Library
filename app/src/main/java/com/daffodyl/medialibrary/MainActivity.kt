@@ -17,8 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.daffodyl.medialibrary.ui.screens.NoteModificationScreen
-import com.daffodyl.medialibrary.ui.screens.NotesScreen
+import com.daffodyl.medialibrary.ui.screens.BoardGamesScreen
+import com.daffodyl.medialibrary.ui.screens.CreateBoardGameScreen
+import com.daffodyl.medialibrary.ui.screens.HomeScreen
 import com.daffodyl.medialibrary.ui.theme.MediaLibraryTheme
 
 class MainActivity : ComponentActivity() {
@@ -43,17 +44,22 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = Destinations.Notes,
+                        startDestination = Destinations.Home,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable<Destinations.Notes> {
-                            NotesScreen(
-                                goToNoteModification = { id -> navController.navigate(Destinations.NoteModification(id)) },
+                        composable<Destinations.Home> {
+                            HomeScreen(
+                                goToBoardGames = { navController.navigate(Destinations.BoardGames) },
                             )
                         }
-                        composable<Destinations.NoteModification> {
-                            NoteModificationScreen(
-                                id = it.toRoute<Destinations.NoteModification>().noteId,
+                        composable<Destinations.BoardGames> {
+                            BoardGamesScreen(
+                                goToCreateBoardGame = { id -> navController.navigate(Destinations.CreateBoardGame(id)) },
+                            )
+                        }
+                        composable<Destinations.CreateBoardGame> {
+                            CreateBoardGameScreen(
+                                id = it.toRoute<Destinations.CreateBoardGame>().boardGameId,
                                 goBack = { navController.popBackStack() },
                             )
                         }

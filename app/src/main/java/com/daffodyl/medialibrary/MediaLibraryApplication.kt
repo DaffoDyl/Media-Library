@@ -1,8 +1,8 @@
 package com.daffodyl.medialibrary
 
 import android.app.Application
-import com.daffodyl.medialibrary.repositories.NotePagesRepository
+import com.daffodyl.medialibrary.repositories.BoardGamesRepository
 
 class MediaLibraryApplication : Application() {
-    val notePagesRepository = NotePagesRepository
+    val boardGamesRepository = BoardGamesRepository
 }
