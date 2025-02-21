@@ -29,6 +29,7 @@ import com.daffodyl.medialibrary.viewmodels.BoardGamesScreenViewModel
 
 @Composable
 fun BoardGamesScreen(
+    goToBoardGame: (id: Int) -> Unit,
     goToCreateBoardGame: (id: Int?) -> Unit,
     viewModel: BoardGamesScreenViewModel = viewModel(
         factory = BoardGamesScreenViewModel.Factory,
@@ -60,7 +61,7 @@ fun BoardGamesScreen(
             ) {
             val modifier = Modifier.aspectRatio(1f)
             items(boardGames) {
-                MediaBox(modifier, it.title) { goToCreateBoardGame(it.id) }
+                MediaBox(modifier, it.title) { goToBoardGame(it.id) }
             }
         }
 

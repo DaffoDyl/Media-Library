@@ -51,7 +51,7 @@ fun CreateBoardGameScreen(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
-                    text = "Note",
+                    text = "Board Game Details",
                 )
                 val title by viewModel.title.collectAsState()
                 val minPlayers by viewModel.minPlayers.collectAsState()

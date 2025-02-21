@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.daffodyl.medialibrary.ui.screens.BoardGameScreen
 import com.daffodyl.medialibrary.ui.screens.BoardGamesScreen
 import com.daffodyl.medialibrary.ui.screens.CreateBoardGameScreen
 import com.daffodyl.medialibrary.ui.screens.HomeScreen
@@ -54,6 +55,14 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Destinations.BoardGames> {
                             BoardGamesScreen(
+                                goToBoardGame = { id -> navController.navigate(Destinations.BoardGame(id)) },
+                                goToCreateBoardGame = { id -> navController.navigate(Destinations.CreateBoardGame(id)) },
+                            )
+                        }
+                        composable<Destinations.BoardGame> {
+                            BoardGameScreen(
+                                id = it.toRoute<Destinations.BoardGame>().boardGameId,
+                                goBack = { navController.popBackStack() },
                                 goToCreateBoardGame = { id -> navController.navigate(Destinations.CreateBoardGame(id)) },
                             )
                         }
