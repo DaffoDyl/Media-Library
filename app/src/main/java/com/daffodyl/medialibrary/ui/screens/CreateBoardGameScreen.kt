@@ -94,7 +94,9 @@ fun CreateBoardGameScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
                     value = notes,
                     onValueChange = { viewModel.setNotes(it) },
                     label = { Text("Notes") },
