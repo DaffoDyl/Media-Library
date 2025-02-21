@@ -1,17 +1,13 @@
 package com.daffodyl.medialibrary.ui.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -28,6 +24,7 @@ import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.viewmodels.CreateBoardGameScreenViewModel
+import com.daffodyl.medialibrary.ui.components.DialogButtons
 
 @Composable
 fun CreateBoardGameScreen(
@@ -68,19 +65,24 @@ fun CreateBoardGameScreen(
                     label = { Text("Title") },
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = minPlayers.toString(),
-                    onValueChange = { viewModel.setMinPlayers(it.toInt()) },
+                    value = if(minPlayers != 0) minPlayers.toString() else "",
+                    onValueChange = {
+                        try { viewModel.setMinPlayers(it.toInt()) }
+                        catch (_: NumberFormatException) {}
+                    },
                     label = { Text("Min players") },
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = maxPlayers.toString(),
-                    onValueChange = { viewModel.setMaxPlayers(it.toInt()) },
+                    value = if(maxPlayers != 0) maxPlayers.toString() else "",
+                    onValueChange = {
+                        try { viewModel.setMaxPlayers(it.toInt()) }
+                        catch (_: NumberFormatException) {}
+                    },
                     label = { Text("Max players") },
                     singleLine = true
                 )
@@ -102,26 +104,8 @@ fun CreateBoardGameScreen(
                     label = { Text("Notes") },
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Row {
-                    Button(
-                        onClick = { goBack() },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                            contentColor = MaterialTheme.colorScheme.primary
-                        )
-                    ) {
-                        Text("Cancel")
-                    }
-                    Button(onClick = {
-                        viewModel.saveBoardGame()
-                        goBack()
-                    }) {
-                        Text("Save")
-                    }
-                }
+                DialogButtons(goBack) { viewModel.saveBoardGame() }
             }
-
         }
     }
-
 }
