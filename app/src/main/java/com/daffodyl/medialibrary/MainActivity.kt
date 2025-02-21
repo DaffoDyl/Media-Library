@@ -19,6 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.daffodyl.medialibrary.ui.screens.BoardGameScreen
 import com.daffodyl.medialibrary.ui.screens.BoardGamesScreen
+import com.daffodyl.medialibrary.ui.screens.BookScreen
+import com.daffodyl.medialibrary.ui.screens.BooksScreen
+import com.daffodyl.medialibrary.ui.screens.CreateBookScreen
 import com.daffodyl.medialibrary.ui.screens.CreateBoardGameScreen
 import com.daffodyl.medialibrary.ui.screens.HomeScreen
 import com.daffodyl.medialibrary.ui.theme.MediaLibraryTheme
@@ -51,8 +54,10 @@ class MainActivity : ComponentActivity() {
                         composable<Destinations.Home> {
                             HomeScreen(
                                 goToBoardGames = { navController.navigate(Destinations.BoardGames) },
+                                goToBooks = { navController.navigate(Destinations.Books) },
                             )
                         }
+                        // Board Games
                         composable<Destinations.BoardGames> {
                             BoardGamesScreen(
                                 goToBoardGame = { id -> navController.navigate(Destinations.BoardGame(id)) },
@@ -69,6 +74,26 @@ class MainActivity : ComponentActivity() {
                         composable<Destinations.CreateBoardGame> {
                             CreateBoardGameScreen(
                                 id = it.toRoute<Destinations.CreateBoardGame>().boardGameId,
+                                goBack = { navController.popBackStack() },
+                            )
+                        }
+                        // Books
+                        composable<Destinations.Books> {
+                            BooksScreen(
+                                goToBook = { id -> navController.navigate(Destinations.Book(id)) },
+                                goToCreateBook = { id -> navController.navigate(Destinations.CreateBook(id)) },
+                            )
+                        }
+                        composable<Destinations.Book> {
+                            BookScreen(
+                                id = it.toRoute<Destinations.Book>().bookId,
+                                goBack = { navController.popBackStack() },
+                                goToCreateBook = { id -> navController.navigate(Destinations.CreateBook(id)) },
+                            )
+                        }
+                        composable<Destinations.CreateBook> {
+                            CreateBookScreen(
+                                id = it.toRoute<Destinations.CreateBook>().bookId,
                                 goBack = { navController.popBackStack() },
                             )
                         }

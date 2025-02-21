@@ -65,6 +65,7 @@ fun CreateBoardGameScreen(
                     label = { Text("Title") },
                     singleLine = true
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = if(minPlayers != 0) minPlayers.toString() else "",
