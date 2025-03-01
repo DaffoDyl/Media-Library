@@ -15,6 +15,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.daffodyl.medialibrary.ui.screens.BoardGameScreen
@@ -79,7 +80,7 @@ class MainActivity : ComponentActivity() {
                                 goToCreateBoardGame = { id -> navController.navigate(Destinations.CreateBoardGame(id)) },
                             )
                         }
-                        composable<Destinations.CreateBoardGame> {
+                        dialog<Destinations.CreateBoardGame> {
                             CreateBoardGameScreen(
                                 id = it.toRoute<Destinations.CreateBoardGame>().boardGameId,
                                 goBack = { navController.popBackStack() },
@@ -99,7 +100,7 @@ class MainActivity : ComponentActivity() {
                                 goToCreateBook = { id -> navController.navigate(Destinations.CreateBook(id)) },
                             )
                         }
-                        composable<Destinations.CreateBook> {
+                        dialog<Destinations.CreateBook> {
                             CreateBookScreen(
                                 id = it.toRoute<Destinations.CreateBook>().bookId,
                                 goBack = { navController.popBackStack() },
@@ -119,7 +120,7 @@ class MainActivity : ComponentActivity() {
                                 goToCreateMovie = { id -> navController.navigate(Destinations.CreateMovie(id)) },
                             )
                         }
-                        composable<Destinations.CreateMovie> {
+                        dialog<Destinations.CreateMovie> {
                             CreateMovieScreen(
                                 id = it.toRoute<Destinations.CreateMovie>().movieId,
                                 goBack = { navController.popBackStack() },
@@ -139,7 +140,7 @@ class MainActivity : ComponentActivity() {
                                 goToCreateVideoGame = { id -> navController.navigate(Destinations.CreateVideoGame(id)) },
                             )
                         }
-                        composable<Destinations.CreateVideoGame> {
+                        dialog<Destinations.CreateVideoGame> {
                             CreateVideoGameScreen(
                                 id = it.toRoute<Destinations.CreateVideoGame>().videoGameId,
                                 goBack = { navController.popBackStack() },
