@@ -1,6 +1,7 @@
 package com.daffodyl.medialibrary.daos
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -12,8 +13,11 @@ abstract class VideoGamesDao {
     abstract suspend fun getAllVideoGames(): List<VideoGame>
 
     @Insert
-    abstract suspend fun insertVideoGame(boardGame: VideoGame)
+    abstract suspend fun insertVideoGame(videoGame: VideoGame)
 
     @Update
-    abstract suspend fun updateVideoGame(boardGame: VideoGame)
+    abstract suspend fun updateVideoGame(videoGame: VideoGame)
+
+    @Delete
+    abstract suspend fun deleteVideoGame(videoGame: VideoGame)
 }

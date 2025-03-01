@@ -1,6 +1,7 @@
 package com.daffodyl.medialibrary.daos
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -12,8 +13,11 @@ abstract class MoviesDao {
     abstract suspend fun getAllMovies(): List<Movie>
 
     @Insert
-    abstract suspend fun insertMovie(boardGame: Movie)
+    abstract suspend fun insertMovie(movie: Movie)
 
     @Update
-    abstract suspend fun updateMovie(boardGame: Movie)
+    abstract suspend fun updateMovie(movie: Movie)
+
+    @Delete
+    abstract suspend fun deleteMovie(movie: Movie)
 }
