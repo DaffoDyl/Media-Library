@@ -13,7 +13,7 @@ abstract class MoviesDao {
     abstract suspend fun getAllMovies(): List<Movie>
 
     @Insert
-    abstract suspend fun insertMovie(movie: Movie)
+    abstract suspend fun insertMovie(movie: Movie): Long
 
     @Update
     abstract suspend fun updateMovie(movie: Movie)

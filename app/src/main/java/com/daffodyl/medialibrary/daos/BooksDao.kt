@@ -13,7 +13,7 @@ abstract class BooksDao {
     abstract suspend fun getAllBooks(): List<Book>
 
     @Insert
-    abstract suspend fun insertBook(book: Book)
+    abstract suspend fun insertBook(book: Book): Long
 
     @Update
     abstract suspend fun updateBook(book: Book)

@@ -13,7 +13,7 @@ abstract class BoardGamesDao {
     abstract suspend fun getAllBoardGames(): List<BoardGame>
 
     @Insert
-    abstract suspend fun insertBoardGame(boardGame: BoardGame)
+    abstract suspend fun insertBoardGame(boardGame: BoardGame): Long
 
     @Update
     abstract suspend fun updateBoardGame(boardGame: BoardGame)
