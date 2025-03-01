@@ -47,23 +47,18 @@ fun VideoGameScreen(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ){
-            val title by viewModel.title.collectAsState()
-            val developer by viewModel.developer.collectAsState()
-            val genre by viewModel.genre.collectAsState()
-            val rating by viewModel.rating.collectAsState()
-            val platform by viewModel.developer.collectAsState()
-            val notes by viewModel.notes.collectAsState()
+            val videoGame by viewModel.videoGame.collectAsState()
             Text(
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = title,
+                text = "${videoGame?.title}",
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue(developer, "Developer")
-            LabeledMediaValue(genre, "Genre")
-            LabeledMediaValue(rating, "Rating")
-            LabeledMediaValue(platform, "Platform")
-            LabeledMediaValue(notes, "Notes")
+            LabeledMediaValue("${videoGame?.developer}", "Developer")
+            LabeledMediaValue("${videoGame?.genre}", "Genre")
+            LabeledMediaValue("${videoGame?.rating}", "Rating")
+            LabeledMediaValue("${videoGame?.platform}", "Platform")
+            LabeledMediaValue("${videoGame?.notes}", "Notes")
 
         }
         Row(
