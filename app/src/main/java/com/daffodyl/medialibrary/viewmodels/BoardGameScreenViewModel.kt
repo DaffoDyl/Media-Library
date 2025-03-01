@@ -30,7 +30,7 @@ class BoardGameScreenViewModel(
     init {
         viewModelScope.launch {
             boardGamesRepository.boardGames.collect { boardGames ->
-                _boardGame.value = boardGames.find { it.id.toLong() == boardGameId }
+                _boardGame.value = boardGames.find { it.id == boardGameId }
             }
         }
     }
