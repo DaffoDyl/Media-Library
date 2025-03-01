@@ -32,7 +32,7 @@ fun CreateBookScreen(
     viewModel: CreateBookScreenViewModel = viewModel(
         factory = CreateBookScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
-            this[CreateBookScreenViewModel.BOARD_GAME_ID_KEY] = id
+            this[CreateBookScreenViewModel.BOOK_ID_KEY] = id
             this[APPLICATION_KEY] = LocalContext.current.applicationContext as MediaLibraryApplication
         }
     )

@@ -34,7 +34,7 @@ fun BookScreen(
     viewModel: BookScreenViewModel = viewModel(
         factory = BookScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
-            this[BookScreenViewModel.BOARD_GAME_ID_KEY] = id
+            this[BookScreenViewModel.BOOK_ID_KEY] = id
             this[APPLICATION_KEY] = LocalContext.current.applicationContext as MediaLibraryApplication
         }
     )
@@ -47,23 +47,21 @@ fun BookScreen(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ){
-            val title by viewModel.title.collectAsState()
-            val author by viewModel.author.collectAsState()
-            val format by viewModel.format.collectAsState()
-            val numPages by viewModel.numPages.collectAsState()
-            val genre by viewModel.genre.collectAsState()
-            val notes by viewModel.notes.collectAsState()
+            val book by viewModel.book.collectAsState()
             Text(
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = title,
+                text = "${book?.title}",
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue(author, "Author")
-            LabeledMediaValue(format, "Format")
-            LabeledMediaValue(if(numPages != 0L) numPages.toString() else "", "Num Pages")
-            LabeledMediaValue(genre, "Genre")
-            LabeledMediaValue(notes, "Notes")
+            LabeledMediaValue("${book?.author}", "Author")
+            LabeledMediaValue("${book?.format}", "Format")
+            LabeledMediaValue(
+                value = if(book?.numPages != 0L) book?.numPages.toString() else "",
+                label = "Num Pages"
+            )
+            LabeledMediaValue("${book?.genre}", "Genre")
+            LabeledMediaValue("${book?.notes}", "Notes")
 
         }
         Row(

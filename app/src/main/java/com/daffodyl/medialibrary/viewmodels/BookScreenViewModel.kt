@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.daffodyl.medialibrary.MediaLibraryApplication
+import com.daffodyl.medialibrary.models.Book
 import com.daffodyl.medialibrary.repositories.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,59 +15,35 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class BookScreenViewModel(
-    private val bookId: Long?,
-    private val booksRepository: BooksRepository
+    private val booksRepository: BooksRepository,
+    private val bookId: Long
 ): ViewModel() {
-    private val _title = MutableStateFlow("")
-    private val _author = MutableStateFlow("")
-    private val _format = MutableStateFlow("")
-    private val _numPages = MutableStateFlow(0L)
-    private val _genre = MutableStateFlow("")
-    private val _notes = MutableStateFlow("")
-
-    val title: StateFlow<String> = _title
-    val author: StateFlow<String> = _author
-    val format: StateFlow<String> = _format
-    val numPages: StateFlow<Long> = _numPages
-    val genre: StateFlow<String> = _genre
-    val notes: StateFlow<String> = _notes
+    private val _book = MutableStateFlow<Book?>(null)
+    val book: StateFlow<Book?> = _book
 
     fun deleteBook() {
-        if (bookId != null) {
-            viewModelScope.launch(Dispatchers.Default) {
-                booksRepository.deleteBook(bookId)
-            }
+        viewModelScope.launch(Dispatchers.Default) {
+            booksRepository.deleteBook(bookId)
         }
     }
 
     init {
-        if (bookId != null) {
-            viewModelScope.launch(Dispatchers.Default) {
-                booksRepository.books.collect { books ->
-                    val book = books.find { it.id == bookId }
-                    if (book != null) {
-                        _title.value = book.title
-                        _author.value = book.author
-                        _format.value = book.format
-                        _numPages.value = book.numPages
-                        _genre.value = book.genre
-                        _notes.value = book.notes
-                    }
-                }
+        viewModelScope.launch {
+            booksRepository.books.collect { books ->
+                _book.value = books.find { it.id == bookId }
             }
         }
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
-
+        val BOOK_ID_KEY = object: CreationExtras.Key<Long> {}
         val Factory = viewModelFactory {
             initializer {
-                val bookId = this[BOARD_GAME_ID_KEY]
                 val application = this[APPLICATION_KEY] as MediaLibraryApplication
+                val bookId = this[BOOK_ID_KEY] as Long
                 BookScreenViewModel(
-                    bookId,
-                    application.booksRepository
+                    application.booksRepository,
+                    bookId
                 )
             }
         }
