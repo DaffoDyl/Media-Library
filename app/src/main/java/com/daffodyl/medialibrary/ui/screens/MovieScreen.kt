@@ -47,23 +47,21 @@ fun MovieScreen(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ){
-            val title by viewModel.title.collectAsState()
-            val format by viewModel.format.collectAsState()
-            val rating by viewModel.rating.collectAsState()
-            val runtime by viewModel.runtime.collectAsState()
-            val genre by viewModel.genre.collectAsState()
-            val notes by viewModel.notes.collectAsState()
+            val movie by viewModel.movie.collectAsState()
             Text(
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = title,
+                text = "${movie?.title}",
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue(format, "Format")
-            LabeledMediaValue(rating, "Rating")
-            LabeledMediaValue(if(runtime != 0L) runtime.toString() else "", "Run Time")
-            LabeledMediaValue(genre, "Genre")
-            LabeledMediaValue(notes, "Notes")
+            LabeledMediaValue("${movie?.format}", "Format")
+            LabeledMediaValue("${movie?.rating}", "Rating")
+            LabeledMediaValue(
+                value = if(movie?.runtime != 0L) movie?.runtime.toString() else "",
+                label = "Run Time"
+            )
+            LabeledMediaValue("${movie?.genre}", "Genre")
+            LabeledMediaValue("${movie?.notes}", "Notes")
 
         }
         Row(
