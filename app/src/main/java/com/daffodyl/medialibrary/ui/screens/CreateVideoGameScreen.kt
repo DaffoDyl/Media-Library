@@ -32,7 +32,7 @@ fun CreateVideoGameScreen(
     viewModel: CreateVideoGameScreenViewModel = viewModel(
         factory = CreateVideoGameScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
-            this[CreateVideoGameScreenViewModel.BOARD_GAME_ID_KEY] = id
+            this[CreateVideoGameScreenViewModel.VIDEO_GAME_ID_KEY] = id
             this[APPLICATION_KEY] = LocalContext.current.applicationContext as MediaLibraryApplication
         }
     )

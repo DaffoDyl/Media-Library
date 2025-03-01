@@ -95,11 +95,11 @@ class CreateVideoGameScreenViewModel(
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
+        var VIDEO_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
 
         val Factory = viewModelFactory {
             initializer {
-                val videoGameId = this[BOARD_GAME_ID_KEY]
+                val videoGameId = this[VIDEO_GAME_ID_KEY]
                 val application = this[APPLICATION_KEY] as MediaLibraryApplication
                 CreateVideoGameScreenViewModel(
                     videoGameId,

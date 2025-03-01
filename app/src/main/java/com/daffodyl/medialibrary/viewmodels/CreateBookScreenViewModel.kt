@@ -95,11 +95,11 @@ class CreateBookScreenViewModel(
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
+        var BOOK_ID_KEY = object : CreationExtras.Key<Long?> {}
 
         val Factory = viewModelFactory {
             initializer {
-                val bookId = this[BOARD_GAME_ID_KEY]
+                val bookId = this[BOOK_ID_KEY]
                 val application = this[APPLICATION_KEY] as MediaLibraryApplication
                 CreateBookScreenViewModel(
                     bookId,

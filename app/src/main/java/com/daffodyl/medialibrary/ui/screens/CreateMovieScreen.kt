@@ -32,7 +32,7 @@ fun CreateMovieScreen(
     viewModel: CreateMovieScreenViewModel = viewModel(
         factory = CreateMovieScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
-            this[CreateMovieScreenViewModel.BOARD_GAME_ID_KEY] = id
+            this[CreateMovieScreenViewModel.MOVIE_ID_KEY] = id
             this[APPLICATION_KEY] = LocalContext.current.applicationContext as MediaLibraryApplication
         }
     )
