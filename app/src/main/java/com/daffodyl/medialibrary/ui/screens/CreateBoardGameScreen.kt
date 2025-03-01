@@ -27,7 +27,7 @@ import com.daffodyl.medialibrary.ui.components.DialogButtons
 
 @Composable
 fun CreateBoardGameScreen(
-    id: Int?,
+    id: Long?,
     goBack: () -> Unit,
     viewModel: CreateBoardGameScreenViewModel = viewModel(
         factory = CreateBoardGameScreenViewModel.Factory,
@@ -65,9 +65,9 @@ fun CreateBoardGameScreen(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = if(minPlayers != 0) minPlayers.toString() else "",
+                value = if(minPlayers != 0L) minPlayers.toString() else "",
                 onValueChange = {
-                    try { viewModel.setMinPlayers(it.toInt()) }
+                    try { viewModel.setMinPlayers(it.toLong()) }
                     catch (_: NumberFormatException) {}
                 },
                 label = { Text("Min players") },
@@ -76,9 +76,9 @@ fun CreateBoardGameScreen(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = if(maxPlayers != 0) maxPlayers.toString() else "",
+                value = if(maxPlayers != 0L) maxPlayers.toString() else "",
                 onValueChange = {
-                    try { viewModel.setMaxPlayers(it.toInt()) }
+                    try { viewModel.setMaxPlayers(it.toLong()) }
                     catch (_: NumberFormatException) {}
                 },
                 label = { Text("Max players") },

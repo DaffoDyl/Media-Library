@@ -27,7 +27,7 @@ import com.daffodyl.medialibrary.ui.components.DialogButtons
 
 @Composable
 fun CreateVideoGameScreen(
-    id: Int?,
+    id: Long?,
     goBack: () -> Unit,
     viewModel: CreateVideoGameScreenViewModel = viewModel(
         factory = CreateVideoGameScreenViewModel.Factory,

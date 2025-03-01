@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object BoardGamesRepository {
-    private var idCounter = 0
+    private var idCounter = 0L
     private val _boardGames = MutableStateFlow(emptyList<BoardGame>())
     val boardGames: StateFlow<List<BoardGame>> = _boardGames
 
     fun addBoardGames(
         title: String,
-        minPlayers: Int,
-        maxPlayers: Int,
+        minPlayers: Long,
+        maxPlayers: Long,
         genre: String,
         notes: String
     ) {
@@ -28,10 +28,10 @@ object BoardGamesRepository {
     }
 
     fun updateBoardGame(
-        id: Int,
+        id: Long,
         title: String,
-        minPlayers: Int,
-        maxPlayers: Int,
+        minPlayers: Long,
+        maxPlayers: Long,
         genre: String,
         notes: String
     ) {
@@ -54,7 +54,7 @@ object BoardGamesRepository {
     }
 
     fun deleteBoardGame(
-        id: Int
+        id: Long
     ) {
         _boardGames.value = _boardGames.value.filter { it.id != id }
     }

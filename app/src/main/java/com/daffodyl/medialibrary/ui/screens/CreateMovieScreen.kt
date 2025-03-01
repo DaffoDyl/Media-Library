@@ -27,7 +27,7 @@ import com.daffodyl.medialibrary.ui.components.DialogButtons
 
 @Composable
 fun CreateMovieScreen(
-    id: Int?,
+    id: Long?,
     goBack: () -> Unit,
     viewModel: CreateMovieScreenViewModel = viewModel(
         factory = CreateMovieScreenViewModel.Factory,
@@ -82,9 +82,9 @@ fun CreateMovieScreen(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = if(runTime != 0) runTime.toString() else "",
+                value = if(runTime != 0L) runTime.toString() else "",
                 onValueChange = {
-                    try { viewModel.setRunTime(it.toInt()) }
+                    try { viewModel.setRunTime(it.toLong()) }
                     catch (_: NumberFormatException) {}
                 },
                 label = { Text("Run Time") },

@@ -28,9 +28,9 @@ import com.daffodyl.medialibrary.viewmodels.BoardGameScreenViewModel
 
 @Composable
 fun BoardGameScreen(
-    id: Int,
+    id: Long,
     goBack: () -> Unit,
-    goToCreateBoardGame: (id: Int) -> Unit,
+    goToCreateBoardGame: (id: Long) -> Unit,
     viewModel: BoardGameScreenViewModel = viewModel(
         factory = BoardGameScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
@@ -47,21 +47,23 @@ fun BoardGameScreen(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ){
-            val title by viewModel.title.collectAsState()
-            val minPlayers by viewModel.minPlayers.collectAsState()
-            val maxPlayers by viewModel.maxPlayers.collectAsState()
-            val genre by viewModel.genre.collectAsState()
-            val notes by viewModel.notes.collectAsState()
+            val boardGame by viewModel.boardGame.collectAsState()
             Text(
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = title,
+                text = "${boardGame?.title}",
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue(if(minPlayers != 0) minPlayers.toString() else "", "Min Players")
-            LabeledMediaValue(if(maxPlayers != 0) maxPlayers.toString() else "", "Max Players")
-            LabeledMediaValue(genre, "Genre")
-            LabeledMediaValue(notes, "Notes")
+            LabeledMediaValue(
+                value = if(boardGame?.minPlayers != 0L) boardGame?.minPlayers.toString() else "",
+                label = "Min Players"
+            )
+            LabeledMediaValue(
+                value = if(boardGame?.maxPlayers != 0L) boardGame?.maxPlayers.toString() else "",
+                label = "Max Players"
+            )
+            LabeledMediaValue("${boardGame?.genre}", "Genre")
+            LabeledMediaValue("${boardGame?.notes}", "Notes")
 
         }
         Row(

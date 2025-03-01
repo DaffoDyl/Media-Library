@@ -28,9 +28,9 @@ import com.daffodyl.medialibrary.viewmodels.BookScreenViewModel
 
 @Composable
 fun BookScreen(
-    id: Int,
+    id: Long,
     goBack: () -> Unit,
-    goToCreateBook: (id: Int) -> Unit,
+    goToCreateBook: (id: Long) -> Unit,
     viewModel: BookScreenViewModel = viewModel(
         factory = BookScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
@@ -61,7 +61,7 @@ fun BookScreen(
             Spacer(modifier = Modifier.height(8.dp))
             LabeledMediaValue(author, "Author")
             LabeledMediaValue(format, "Format")
-            LabeledMediaValue(if(numPages != 0) numPages.toString() else "", "Num Pages")
+            LabeledMediaValue(if(numPages != 0L) numPages.toString() else "", "Num Pages")
             LabeledMediaValue(genre, "Genre")
             LabeledMediaValue(notes, "Notes")
 

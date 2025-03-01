@@ -8,12 +8,12 @@ class Destinations {
     @Serializable object Books
     @Serializable object Movies
     @Serializable object VideoGames
-    @Serializable class BoardGame(val boardGameId: Int)
-    @Serializable class Book(val bookId: Int)
-    @Serializable class Movie(val movieId: Int)
-    @Serializable class VideoGame(val videoGameId: Int)
-    @Serializable class CreateBoardGame(val boardGameId: Int? = null)
-    @Serializable class CreateBook(val bookId: Int? = null)
-    @Serializable class CreateMovie(val movieId: Int? = null)
-    @Serializable class CreateVideoGame(val videoGameId: Int? = null)
+    @Serializable class BoardGame(val boardGameId: Long)
+    @Serializable class Book(val bookId: Long)
+    @Serializable class Movie(val movieId: Long)
+    @Serializable class VideoGame(val videoGameId: Long)
+    @Serializable class CreateBoardGame(val boardGameId: Long? = null)
+    @Serializable class CreateBook(val bookId: Long? = null)
+    @Serializable class CreateMovie(val movieId: Long? = null)
+    @Serializable class CreateVideoGame(val videoGameId: Long? = null)
 }

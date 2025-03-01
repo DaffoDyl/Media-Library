@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class VideoGameScreenViewModel(
-    private val videoGameId: Int?,
+    private val videoGameId: Long?,
     private val videoGamesRepository: VideoGamesRepository
 ): ViewModel() {
     private val _title = MutableStateFlow("")
@@ -58,7 +58,7 @@ class VideoGameScreenViewModel(
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Int?> {}
+        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
 
         val Factory = viewModelFactory {
             initializer {

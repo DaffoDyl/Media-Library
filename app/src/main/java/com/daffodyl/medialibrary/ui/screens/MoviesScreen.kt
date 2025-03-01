@@ -25,8 +25,8 @@ import com.daffodyl.medialibrary.viewmodels.MoviesScreenViewModel
 
 @Composable
 fun MoviesScreen(
-    goToMovie: (id: Int) -> Unit,
-    goToCreateMovie: (id: Int?) -> Unit,
+    goToMovie: (id: Long) -> Unit,
+    goToCreateMovie: (id: Long?) -> Unit,
     viewModel: MoviesScreenViewModel = viewModel(factory = MoviesScreenViewModel.Factory)
 ) {
     val movies by viewModel.movies.collectAsState()

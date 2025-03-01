@@ -14,20 +14,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CreateMovieScreenViewModel(
-    private val movieId: Int?,
+    private val movieId: Long?,
     private val moviesRepository: MoviesRepository
 ): ViewModel() {
     private val _title = MutableStateFlow("")
     private val _format = MutableStateFlow("")
     private val _rating = MutableStateFlow("")
-    private val _runTime = MutableStateFlow(0)
+    private val _runTime = MutableStateFlow(0L)
     private val _genre = MutableStateFlow("")
     private val _notes = MutableStateFlow("")
 
     val title: StateFlow<String> = _title
     val format: StateFlow<String> = _format
     val rating: StateFlow<String> = _rating
-    val runTime: StateFlow<Int> = _runTime
+    val runTime: StateFlow<Long> = _runTime
     val genre: StateFlow<String> = _genre
     val notes: StateFlow<String> = _notes
 
@@ -43,7 +43,7 @@ class CreateMovieScreenViewModel(
         _rating.value = rating
     }
 
-    fun setRunTime(runTime: Int) {
+    fun setRunTime(runTime: Long) {
         _runTime.value = runTime
     }
 
@@ -95,7 +95,7 @@ class CreateMovieScreenViewModel(
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Int?> {}
+        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
 
         val Factory = viewModelFactory {
             initializer {

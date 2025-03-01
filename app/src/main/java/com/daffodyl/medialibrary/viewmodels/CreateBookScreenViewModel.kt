@@ -14,20 +14,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CreateBookScreenViewModel(
-    private val bookId: Int?,
+    private val bookId: Long?,
     private val booksRepository: BooksRepository
 ): ViewModel() {
     private val _title = MutableStateFlow("")
     private val _author = MutableStateFlow("")
     private val _format = MutableStateFlow("")
-    private val _numPages = MutableStateFlow(0)
+    private val _numPages = MutableStateFlow(0L)
     private val _genre = MutableStateFlow("")
     private val _notes = MutableStateFlow("")
 
     val title: StateFlow<String> = _title
     val author: StateFlow<String> = _author
     val format: StateFlow<String> = _format
-    val numPages: StateFlow<Int> = _numPages
+    val numPages: StateFlow<Long> = _numPages
     val genre: StateFlow<String> = _genre
     val notes: StateFlow<String> = _notes
 
@@ -43,7 +43,7 @@ class CreateBookScreenViewModel(
         _format.value = format
     }
 
-    fun setNumPages(numPages: Int) {
+    fun setNumPages(numPages: Long) {
         _numPages.value = numPages
     }
 
@@ -95,7 +95,7 @@ class CreateBookScreenViewModel(
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Int?> {}
+        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
 
         val Factory = viewModelFactory {
             initializer {

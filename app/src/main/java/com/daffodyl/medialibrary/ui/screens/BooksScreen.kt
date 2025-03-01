@@ -25,8 +25,8 @@ import com.daffodyl.medialibrary.viewmodels.BooksScreenViewModel
 
 @Composable
 fun BooksScreen(
-    goToBook: (id: Int) -> Unit,
-    goToCreateBook: (id: Int?) -> Unit,
+    goToBook: (id: Long) -> Unit,
+    goToCreateBook: (id: Long?) -> Unit,
     viewModel: BooksScreenViewModel = viewModel(factory = BooksScreenViewModel.Factory)
 ) {
     val books by viewModel.books.collectAsState()

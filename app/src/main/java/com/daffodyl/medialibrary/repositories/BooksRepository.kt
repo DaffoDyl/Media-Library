@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object BooksRepository {
-    private var idCounter = 0
+    private var idCounter = 0L
     private val _books = MutableStateFlow(emptyList<Book>())
     val books: StateFlow<List<Book>> = _books
 
@@ -13,7 +13,7 @@ object BooksRepository {
         title: String,
         author: String,
         format: String,
-        numPages: Int,
+        numPages: Long,
         genre: String,
         notes: String
     ) {
@@ -30,11 +30,11 @@ object BooksRepository {
     }
 
     fun updateBook(
-        id: Int,
+        id: Long,
         title: String,
         author: String,
         format: String,
-        numPages: Int,
+        numPages: Long,
         genre: String,
         notes: String
     ) {
@@ -58,7 +58,7 @@ object BooksRepository {
     }
 
     fun deleteBook(
-        id: Int
+        id: Long
     ) {
         _books.value = _books.value.filter { it.id != id }
     }

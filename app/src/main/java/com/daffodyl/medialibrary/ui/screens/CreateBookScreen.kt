@@ -27,7 +27,7 @@ import com.daffodyl.medialibrary.ui.components.DialogButtons
 
 @Composable
 fun CreateBookScreen(
-    id: Int?,
+    id: Long?,
     goBack: () -> Unit,
     viewModel: CreateBookScreenViewModel = viewModel(
         factory = CreateBookScreenViewModel.Factory,
@@ -82,9 +82,9 @@ fun CreateBookScreen(
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = if(numPages != 0) numPages.toString() else "",
+                value = if(numPages != 0L) numPages.toString() else "",
                 onValueChange = {
-                    try { viewModel.setNumPages(it.toInt()) }
+                    try { viewModel.setNumPages(it.toLong()) }
                     catch (_: NumberFormatException) {}
                 },
                 label = { Text("Num pages") },

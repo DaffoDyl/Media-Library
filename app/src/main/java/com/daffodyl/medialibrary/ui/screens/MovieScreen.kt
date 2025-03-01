@@ -28,9 +28,9 @@ import com.daffodyl.medialibrary.viewmodels.MovieScreenViewModel
 
 @Composable
 fun MovieScreen(
-    id: Int,
+    id: Long,
     goBack: () -> Unit,
-    goToCreateMovie: (id: Int) -> Unit,
+    goToCreateMovie: (id: Long) -> Unit,
     viewModel: MovieScreenViewModel = viewModel(
         factory = MovieScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
@@ -61,7 +61,7 @@ fun MovieScreen(
             Spacer(modifier = Modifier.height(8.dp))
             LabeledMediaValue(format, "Format")
             LabeledMediaValue(rating, "Rating")
-            LabeledMediaValue(if(runtime != 0) runtime.toString() else "", "Run Time")
+            LabeledMediaValue(if(runtime != 0L) runtime.toString() else "", "Run Time")
             LabeledMediaValue(genre, "Genre")
             LabeledMediaValue(notes, "Notes")
 

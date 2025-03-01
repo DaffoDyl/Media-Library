@@ -14,18 +14,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CreateBoardGameScreenViewModel(
-    private val boardGameId: Int?,
+    private val boardGameId: Long?,
     private val boardGamesRepository: BoardGamesRepository
 ): ViewModel() {
     private val _title = MutableStateFlow("")
-    private val _minPlayers = MutableStateFlow(0)
-    private val _maxPlayers = MutableStateFlow(0)
+    private val _minPlayers = MutableStateFlow(0L)
+    private val _maxPlayers = MutableStateFlow(0L)
     private val _genre = MutableStateFlow("")
     private val _notes = MutableStateFlow("")
 
     val title: StateFlow<String> = _title
-    val minPlayers: StateFlow<Int> = _minPlayers
-    val maxPlayers: StateFlow<Int> = _maxPlayers
+    val minPlayers: StateFlow<Long> = _minPlayers
+    val maxPlayers: StateFlow<Long> = _maxPlayers
     val genre: StateFlow<String> = _genre
     val notes: StateFlow<String> = _notes
 
@@ -33,11 +33,11 @@ class CreateBoardGameScreenViewModel(
         _title.value = title
     }
 
-    fun setMinPlayers(minPlayers: Int) {
+    fun setMinPlayers(minPlayers: Long) {
         _minPlayers.value = minPlayers
     }
 
-    fun setMaxPlayers(maxPlayers: Int) {
+    fun setMaxPlayers(maxPlayers: Long) {
         _maxPlayers.value = maxPlayers
     }
 
@@ -86,7 +86,7 @@ class CreateBoardGameScreenViewModel(
     }
 
     companion object {
-        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Int?> {}
+        var BOARD_GAME_ID_KEY = object : CreationExtras.Key<Long?> {}
 
         val Factory = viewModelFactory {
             initializer {

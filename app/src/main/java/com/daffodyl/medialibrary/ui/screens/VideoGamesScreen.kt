@@ -25,8 +25,8 @@ import com.daffodyl.medialibrary.viewmodels.VideoGamesScreenViewModel
 
 @Composable
 fun VideoGamesScreen(
-    goToVideoGame: (id: Int) -> Unit,
-    goToCreateVideoGame: (id: Int?) -> Unit,
+    goToVideoGame: (id: Long) -> Unit,
+    goToCreateVideoGame: (id: Long?) -> Unit,
     viewModel: VideoGamesScreenViewModel = viewModel(factory = VideoGamesScreenViewModel.Factory)
 ) {
     val videoGames by viewModel.videoGames.collectAsState()

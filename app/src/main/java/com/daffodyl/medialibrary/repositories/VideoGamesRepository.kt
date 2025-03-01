@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object VideoGamesRepository {
-    private var idCounter = 0
+    private var idCounter = 0L
     private val _videoGames = MutableStateFlow(emptyList<VideoGame>())
     val videoGames: StateFlow<List<VideoGame>> = _videoGames
 
@@ -30,7 +30,7 @@ object VideoGamesRepository {
     }
 
     fun updateVideoGame(
-        id: Int,
+        id: Long,
         title: String,
         developer: String,
         genre: String,
@@ -58,7 +58,7 @@ object VideoGamesRepository {
     }
 
     fun deleteVideoGame(
-        id: Int
+        id: Long
     ) {
         _videoGames.value = _videoGames.value.filter { it.id != id }
     }

@@ -25,8 +25,8 @@ import com.daffodyl.medialibrary.viewmodels.BoardGamesScreenViewModel
 
 @Composable
 fun BoardGamesScreen(
-    goToBoardGame: (id: Int) -> Unit,
-    goToCreateBoardGame: (id: Int?) -> Unit,
+    goToBoardGame: (id: Long) -> Unit,
+    goToCreateBoardGame: (id: Long?) -> Unit,
     viewModel: BoardGamesScreenViewModel = viewModel(factory = BoardGamesScreenViewModel.Factory)
 ) {
     val boardGames by viewModel.boardGames.collectAsState()

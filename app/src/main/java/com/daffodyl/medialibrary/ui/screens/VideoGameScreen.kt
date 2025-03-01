@@ -28,9 +28,9 @@ import com.daffodyl.medialibrary.viewmodels.VideoGameScreenViewModel
 
 @Composable
 fun VideoGameScreen(
-    id: Int,
+    id: Long,
     goBack: () -> Unit,
-    goToCreateVideoGame: (id: Int) -> Unit,
+    goToCreateVideoGame: (id: Long) -> Unit,
     viewModel: VideoGameScreenViewModel = viewModel(
         factory = VideoGameScreenViewModel.Factory,
         extras = MutableCreationExtras().apply {
