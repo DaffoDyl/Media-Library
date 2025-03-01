@@ -10,14 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.ui.components.MediaBox
-import com.daffodyl.medialibrary.viewmodels.BooksScreenViewModel
 import com.daffodyl.medialibrary.viewmodels.HomeScreenViewModel
 
 @Composable
@@ -26,12 +21,7 @@ fun HomeScreen(
     goToBooks: () -> Unit,
     goToMovies: () -> Unit,
     goToVideoGames: () -> Unit,
-    viewModel: HomeScreenViewModel = viewModel(
-        factory = HomeScreenViewModel.Factory,
-        extras = MutableCreationExtras().apply {
-            this[APPLICATION_KEY] = LocalContext.current.applicationContext as MediaLibraryApplication
-        }
-    )
+    viewModel: HomeScreenViewModel = viewModel(factory = HomeScreenViewModel.Factory)
 ) {
     val books by viewModel.books.collectAsState()
     val movies by viewModel.movies.collectAsState()
