@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object MoviesRepository {
-    private var idCounter = 0L
     private val _movies = MutableStateFlow(emptyList<Movie>())
     val movies: StateFlow<List<Movie>> = _movies
 
@@ -18,7 +17,6 @@ object MoviesRepository {
         notes: String
     ) {
         val newMovie = Movie(
-            id = ++idCounter,
             title = title,
             format = format,
             rating = rating,

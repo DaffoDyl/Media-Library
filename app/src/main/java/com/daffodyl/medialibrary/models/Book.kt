@@ -1,11 +1,16 @@
 package com.daffodyl.medialibrary.models
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Book(
-    val id: Long,
-    val title: String,
-    val author: String,
-    val format: String,
-    val numPages: Long,
-    val genre: String,
-    val notes: String
+    @PrimaryKey(autoGenerate = true) var id: Long? = null,
+    @ColumnInfo val title: String,
+    @ColumnInfo val author: String,
+    @ColumnInfo val format: String,
+    @ColumnInfo val numPages: Long,
+    @ColumnInfo val genre: String,
+    @ColumnInfo val notes: String
 )

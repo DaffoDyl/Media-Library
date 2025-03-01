@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object BooksRepository {
-    private var idCounter = 0L
     private val _books = MutableStateFlow(emptyList<Book>())
     val books: StateFlow<List<Book>> = _books
 
@@ -18,7 +17,6 @@ object BooksRepository {
         notes: String
     ) {
         val newBook = Book(
-            id = ++idCounter,
             title = title,
             author = author,
             format = format,

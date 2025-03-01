@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object BoardGamesRepository {
-    private var idCounter = 0L
     private val _boardGames = MutableStateFlow(emptyList<BoardGame>())
     val boardGames: StateFlow<List<BoardGame>> = _boardGames
 
@@ -17,7 +16,6 @@ object BoardGamesRepository {
         notes: String
     ) {
         val newBoardGame = BoardGame(
-            id = ++idCounter,
             title = title,
             minPlayers = minPlayers,
             maxPlayers = maxPlayers,
