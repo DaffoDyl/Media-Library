@@ -1,14 +1,21 @@
 package com.daffodyl.medialibrary.repositories
 
+import com.daffodyl.medialibrary.daos.BooksDao
 import com.daffodyl.medialibrary.models.Book
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-object BooksRepository {
+class BooksRepository(
+    private val booksDao: BooksDao
+) {
     private val _books = MutableStateFlow(emptyList<Book>())
     val books: StateFlow<List<Book>> = _books
 
-    fun addBooks(
+    suspend fun loadBooks() {
+        _books.value = booksDao.getAllBooks()
+    }
+
+    suspend fun addBooks(
         title: String,
         author: String,
         format: String,
@@ -24,10 +31,11 @@ object BooksRepository {
             genre = genre,
             notes = notes
         )
+        newBook.id = booksDao.insertBook(newBook)
         _books.value += newBook
     }
 
-    fun updateBook(
+    suspend fun updateBook(
         id: Long,
         title: String,
         author: String,
@@ -44,8 +52,8 @@ object BooksRepository {
             numPages = numPages,
             genre = genre,
             notes = notes
-
         )
+        booksDao.updateBook(updatedBook)
         _books.value = _books.value.map { book ->
             if (book.id == id) {
                 updatedBook
@@ -55,9 +63,12 @@ object BooksRepository {
         }
     }
 
-    fun deleteBook(
-        id: Long
+    suspend fun deleteBook(
+        book: Book?
     ) {
-        _books.value = _books.value.filter { it.id != id }
+        if (book != null) {
+            booksDao.deleteBook(book)
+            _books.value = _books.value.filter { it.id != book.id }
+        }
     }
 }

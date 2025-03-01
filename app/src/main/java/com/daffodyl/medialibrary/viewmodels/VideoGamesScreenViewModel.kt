@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.models.VideoGame
 import com.daffodyl.medialibrary.repositories.VideoGamesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,8 +18,14 @@ class VideoGamesScreenViewModel(
     private val _videoGames = MutableStateFlow(emptyList<VideoGame>())
     val videoGames: StateFlow<List<VideoGame>> = _videoGames
 
+    fun loadVideoGames() {
+        viewModelScope.launch {
+            videoGamesRepository.loadVideoGames()
+        }
+    }
+
     init {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             videoGamesRepository.videoGames.collect {
                 _videoGames.value = it
             }

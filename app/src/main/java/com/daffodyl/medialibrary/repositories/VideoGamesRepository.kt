@@ -1,14 +1,21 @@
 package com.daffodyl.medialibrary.repositories
 
+import com.daffodyl.medialibrary.daos.VideoGamesDao
 import com.daffodyl.medialibrary.models.VideoGame
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-object VideoGamesRepository {
+class VideoGamesRepository(
+    private val videoGamesDao: VideoGamesDao
+) {
     private val _videoGames = MutableStateFlow(emptyList<VideoGame>())
     val videoGames: StateFlow<List<VideoGame>> = _videoGames
 
-    fun addVideoGames(
+    suspend fun loadVideoGames() {
+        _videoGames.value = videoGamesDao.getAllVideoGames()
+    }
+
+    suspend fun addVideoGames(
         title: String,
         developer: String,
         genre: String,
@@ -24,10 +31,11 @@ object VideoGamesRepository {
             platform = platform,
             notes = notes
         )
+        newVideoGame.id = videoGamesDao.insertVideoGame(newVideoGame)
         _videoGames.value += newVideoGame
     }
 
-    fun updateVideoGame(
+    suspend fun updateVideoGame(
         id: Long,
         title: String,
         developer: String,
@@ -44,8 +52,8 @@ object VideoGamesRepository {
             platform = platform,
             genre = genre,
             notes = notes
-
         )
+        videoGamesDao.updateVideoGame(updatedVideoGame)
         _videoGames.value = _videoGames.value.map { videoGame ->
             if (videoGame.id == id) {
                 updatedVideoGame
@@ -55,9 +63,12 @@ object VideoGamesRepository {
         }
     }
 
-    fun deleteVideoGame(
-        id: Long
+    suspend fun deleteVideoGame(
+        videoGame: VideoGame?
     ) {
-        _videoGames.value = _videoGames.value.filter { it.id != id }
+        if (videoGame != null) {
+            videoGamesDao.deleteVideoGame(videoGame)
+            _videoGames.value = _videoGames.value.filter { it.id != videoGame.id }
+        }
     }
 }

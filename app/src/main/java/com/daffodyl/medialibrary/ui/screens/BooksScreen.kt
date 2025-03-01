@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,11 +26,16 @@ import com.daffodyl.medialibrary.viewmodels.BooksScreenViewModel
 
 @Composable
 fun BooksScreen(
-    goToBook: (id: Long) -> Unit,
+    goToBook: (id: Long?) -> Unit,
     goToCreateBook: (id: Long?) -> Unit,
     viewModel: BooksScreenViewModel = viewModel(factory = BooksScreenViewModel.Factory)
 ) {
     val books by viewModel.books.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadBooks()
+    }
+
     Column(
         modifier = Modifier
             .padding(16.dp)

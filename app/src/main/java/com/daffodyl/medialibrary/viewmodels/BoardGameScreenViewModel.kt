@@ -9,7 +9,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.models.BoardGame
 import com.daffodyl.medialibrary.repositories.BoardGamesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,8 +21,8 @@ class BoardGameScreenViewModel(
     val boardGame: StateFlow<BoardGame?> = _boardGame
 
     fun deleteBoardGame() {
-        viewModelScope.launch(Dispatchers.Default) {
-            boardGamesRepository.deleteBoardGame(boardGameId)
+        viewModelScope.launch {
+            boardGamesRepository.deleteBoardGame(_boardGame.value)
         }
     }
 
@@ -36,7 +35,7 @@ class BoardGameScreenViewModel(
     }
 
     companion object {
-        val BOARD_GAME_ID_KEY = object: CreationExtras.Key<Long> {}
+        val BOARD_GAME_ID_KEY = object: CreationExtras.Key<Long?> {}
         val Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as MediaLibraryApplication

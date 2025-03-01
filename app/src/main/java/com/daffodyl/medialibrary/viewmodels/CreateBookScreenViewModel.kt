@@ -56,29 +56,31 @@ class CreateBookScreenViewModel(
     }
 
     fun saveBook() {
-        if (bookId != null) {
-            booksRepository.updateBook(
-                bookId,
-                _title.value,
-                _author.value,
-                _format.value,
-                _numPages.value,
-                _genre.value,
-                _notes.value)
-        } else {
-            booksRepository.addBooks(
-                _title.value,
-                _author.value,
-                _format.value,
-                _numPages.value,
-                _genre.value,
-                _notes.value)
+        viewModelScope.launch(Dispatchers.Default) {
+            if (bookId != null) {
+                booksRepository.updateBook(
+                    bookId,
+                    _title.value,
+                    _author.value,
+                    _format.value,
+                    _numPages.value,
+                    _genre.value,
+                    _notes.value)
+            } else {
+                booksRepository.addBooks(
+                    _title.value,
+                    _author.value,
+                    _format.value,
+                    _numPages.value,
+                    _genre.value,
+                    _notes.value)
+            }
         }
     }
 
     init {
         if (bookId != null) {
-            viewModelScope.launch(Dispatchers.Default) {
+            viewModelScope.launch {
                 booksRepository.books.collect { books ->
                     val book = books.find { it.id == bookId }
                     if (book != null) {

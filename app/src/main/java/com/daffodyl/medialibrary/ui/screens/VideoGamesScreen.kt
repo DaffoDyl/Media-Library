@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,11 +26,16 @@ import com.daffodyl.medialibrary.viewmodels.VideoGamesScreenViewModel
 
 @Composable
 fun VideoGamesScreen(
-    goToVideoGame: (id: Long) -> Unit,
+    goToVideoGame: (id: Long?) -> Unit,
     goToCreateVideoGame: (id: Long?) -> Unit,
     viewModel: VideoGamesScreenViewModel = viewModel(factory = VideoGamesScreenViewModel.Factory)
 ) {
     val videoGames by viewModel.videoGames.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadVideoGames()
+    }
+
     Column(
         modifier = Modifier
             .padding(16.dp)

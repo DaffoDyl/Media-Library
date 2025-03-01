@@ -56,29 +56,31 @@ class CreateMovieScreenViewModel(
     }
 
     fun saveMovie() {
-        if (movieId != null) {
-            moviesRepository.updateMovie(
-                movieId,
-                _title.value,
-                _format.value,
-                _rating.value,
-                _runTime.value,
-                _genre.value,
-                _notes.value)
-        } else {
-            moviesRepository.addMovies(
-                _title.value,
-                _format.value,
-                _rating.value,
-                _runTime.value,
-                _genre.value,
-                _notes.value)
+        viewModelScope.launch(Dispatchers.Default) {
+            if (movieId != null) {
+                moviesRepository.updateMovie(
+                    movieId,
+                    _title.value,
+                    _format.value,
+                    _rating.value,
+                    _runTime.value,
+                    _genre.value,
+                    _notes.value)
+            } else {
+                moviesRepository.addMovies(
+                    _title.value,
+                    _format.value,
+                    _rating.value,
+                    _runTime.value,
+                    _genre.value,
+                    _notes.value)
+            }
         }
     }
 
     init {
         if (movieId != null) {
-            viewModelScope.launch(Dispatchers.Default) {
+            viewModelScope.launch {
                 moviesRepository.movies.collect { movies ->
                     val movie = movies.find { it.id == movieId }
                     if (movie != null) {

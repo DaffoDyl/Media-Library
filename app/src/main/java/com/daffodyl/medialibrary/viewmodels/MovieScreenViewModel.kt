@@ -9,7 +9,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.models.Movie
 import com.daffodyl.medialibrary.repositories.MoviesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,8 +21,8 @@ class MovieScreenViewModel(
     val movie: StateFlow<Movie?> = _movie
 
     fun deleteMovie() {
-        viewModelScope.launch(Dispatchers.Default) {
-            moviesRepository.deleteMovie(movieId)
+        viewModelScope.launch {
+            moviesRepository.deleteMovie(_movie.value)
         }
     }
 
@@ -36,7 +35,7 @@ class MovieScreenViewModel(
     }
 
     companion object {
-        val MOVIE_ID_KEY = object: CreationExtras.Key<Long> {}
+        val MOVIE_ID_KEY = object: CreationExtras.Key<Long?> {}
         val Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as MediaLibraryApplication

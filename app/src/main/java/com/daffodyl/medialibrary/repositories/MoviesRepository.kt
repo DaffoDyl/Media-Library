@@ -1,14 +1,21 @@
 package com.daffodyl.medialibrary.repositories
 
+import com.daffodyl.medialibrary.daos.MoviesDao
 import com.daffodyl.medialibrary.models.Movie
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-object MoviesRepository {
+class MoviesRepository(
+    private val moviesDao: MoviesDao
+) {
     private val _movies = MutableStateFlow(emptyList<Movie>())
     val movies: StateFlow<List<Movie>> = _movies
 
-    fun addMovies(
+    suspend fun loadMovies() {
+        _movies.value = moviesDao.getAllMovies()
+    }
+
+    suspend fun addMovies(
         title: String,
         format: String,
         rating: String,
@@ -24,10 +31,11 @@ object MoviesRepository {
             genre = genre,
             notes = notes
         )
+        newMovie.id = moviesDao.insertMovie(newMovie)
         _movies.value += newMovie
     }
 
-    fun updateMovie(
+    suspend fun updateMovie(
         id: Long,
         title: String,
         format: String,
@@ -44,8 +52,8 @@ object MoviesRepository {
             runtime = runtime,
             genre = genre,
             notes = notes
-
         )
+        moviesDao.updateMovie(updatedMovie)
         _movies.value = _movies.value.map { movie ->
             if (movie.id == id) {
                 updatedMovie
@@ -55,9 +63,12 @@ object MoviesRepository {
         }
     }
 
-    fun deleteMovie(
-        id: Long
+    suspend fun deleteMovie(
+        movie: Movie?
     ) {
-        _movies.value = _movies.value.filter { it.id != id }
+        if (movie != null) {
+            moviesDao.deleteMovie(movie)
+            _movies.value = _movies.value.filter { it.id != movie.id }
+        }
     }
 }

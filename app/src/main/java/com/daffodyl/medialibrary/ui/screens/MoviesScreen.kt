@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,11 +26,16 @@ import com.daffodyl.medialibrary.viewmodels.MoviesScreenViewModel
 
 @Composable
 fun MoviesScreen(
-    goToMovie: (id: Long) -> Unit,
+    goToMovie: (id: Long?) -> Unit,
     goToCreateMovie: (id: Long?) -> Unit,
     viewModel: MoviesScreenViewModel = viewModel(factory = MoviesScreenViewModel.Factory)
 ) {
     val movies by viewModel.movies.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadMovies()
+    }
+
     Column(
         modifier = Modifier
             .padding(16.dp)

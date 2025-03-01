@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,6 +28,11 @@ fun HomeScreen(
     val movies by viewModel.movies.collectAsState()
     val boardGames by viewModel.boardGames.collectAsState()
     val videoGames by viewModel.videoGames.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadMedias()
+    }
+
     Column(
         modifier = Modifier
             .padding(16.dp)

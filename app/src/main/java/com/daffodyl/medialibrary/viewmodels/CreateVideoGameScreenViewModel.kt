@@ -56,29 +56,31 @@ class CreateVideoGameScreenViewModel(
     }
 
     fun saveVideoGame() {
-        if (videoGameId != null) {
-            videoGamesRepository.updateVideoGame(
-                videoGameId,
-                _title.value,
-                _developer.value,
-                _genre.value,
-                _rating.value,
-                _platform.value,
-                _notes.value)
-        } else {
-            videoGamesRepository.addVideoGames(
-                _title.value,
-                _developer.value,
-                _genre.value,
-                _rating.value,
-                _platform.value,
-                _notes.value)
+        viewModelScope.launch(Dispatchers.Default) {
+            if (videoGameId != null) {
+                videoGamesRepository.updateVideoGame(
+                    videoGameId,
+                    _title.value,
+                    _developer.value,
+                    _genre.value,
+                    _rating.value,
+                    _platform.value,
+                    _notes.value)
+            } else {
+                videoGamesRepository.addVideoGames(
+                    _title.value,
+                    _developer.value,
+                    _genre.value,
+                    _rating.value,
+                    _platform.value,
+                    _notes.value)
+            }
         }
     }
 
     init {
         if (videoGameId != null) {
-            viewModelScope.launch(Dispatchers.Default) {
+            viewModelScope.launch {
                 videoGamesRepository.videoGames.collect { videoGames ->
                     val videoGame = videoGames.find { it.id == videoGameId }
                     if (videoGame != null) {

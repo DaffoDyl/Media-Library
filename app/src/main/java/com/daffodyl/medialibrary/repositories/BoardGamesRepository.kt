@@ -1,14 +1,21 @@
 package com.daffodyl.medialibrary.repositories
 
+import com.daffodyl.medialibrary.daos.BoardGamesDao
 import com.daffodyl.medialibrary.models.BoardGame
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-object BoardGamesRepository {
+class BoardGamesRepository(
+    private val boardGamesDao: BoardGamesDao
+) {
     private val _boardGames = MutableStateFlow(emptyList<BoardGame>())
     val boardGames: StateFlow<List<BoardGame>> = _boardGames
 
-    fun addBoardGames(
+    suspend fun loadBoardGames() {
+        _boardGames.value = boardGamesDao.getAllBoardGames()
+    }
+
+    suspend fun addBoardGames(
         title: String,
         minPlayers: Long,
         maxPlayers: Long,
@@ -22,10 +29,11 @@ object BoardGamesRepository {
             genre = genre,
             notes = notes
         )
+        newBoardGame.id = boardGamesDao.insertBoardGame(newBoardGame)
         _boardGames.value += newBoardGame
     }
 
-    fun updateBoardGame(
+    suspend fun updateBoardGame(
         id: Long,
         title: String,
         minPlayers: Long,
@@ -40,8 +48,8 @@ object BoardGamesRepository {
             maxPlayers = maxPlayers,
             genre = genre,
             notes = notes
-
         )
+        boardGamesDao.updateBoardGame(updatedBoardGame)
         _boardGames.value = _boardGames.value.map { boardGame ->
             if (boardGame.id == id) {
                 updatedBoardGame
@@ -51,9 +59,12 @@ object BoardGamesRepository {
         }
     }
 
-    fun deleteBoardGame(
-        id: Long
+    suspend fun deleteBoardGame(
+        boardGame: BoardGame?
     ) {
-        _boardGames.value = _boardGames.value.filter { it.id != id }
+        if (boardGame != null) {
+            boardGamesDao.deleteBoardGame(boardGame)
+            _boardGames.value = _boardGames.value.filter { it.id != boardGame.id }
+        }
     }
 }

@@ -9,7 +9,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.models.Book
 import com.daffodyl.medialibrary.repositories.BooksRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,8 +21,8 @@ class BookScreenViewModel(
     val book: StateFlow<Book?> = _book
 
     fun deleteBook() {
-        viewModelScope.launch(Dispatchers.Default) {
-            booksRepository.deleteBook(bookId)
+        viewModelScope.launch {
+            booksRepository.deleteBook(_book.value)
         }
     }
 
@@ -36,7 +35,7 @@ class BookScreenViewModel(
     }
 
     companion object {
-        val BOOK_ID_KEY = object: CreationExtras.Key<Long> {}
+        val BOOK_ID_KEY = object: CreationExtras.Key<Long?> {}
         val Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as MediaLibraryApplication

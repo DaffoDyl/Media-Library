@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.daffodyl.medialibrary.MediaLibraryApplication
 import com.daffodyl.medialibrary.models.Movie
 import com.daffodyl.medialibrary.repositories.MoviesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,8 +18,14 @@ class MoviesScreenViewModel(
     private val _movies = MutableStateFlow(emptyList<Movie>())
     val movies: StateFlow<List<Movie>> = _movies
 
+    fun loadMovies() {
+        viewModelScope.launch {
+            moviesRepository.loadMovies()
+        }
+    }
+
     init {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             moviesRepository.movies.collect {
                 _movies.value = it
             }

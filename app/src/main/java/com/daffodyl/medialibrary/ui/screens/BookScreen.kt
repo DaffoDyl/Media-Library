@@ -28,7 +28,7 @@ import com.daffodyl.medialibrary.viewmodels.BookScreenViewModel
 
 @Composable
 fun BookScreen(
-    id: Long,
+    id: Long?,
     goBack: () -> Unit,
     goToCreateBook: (id: Long) -> Unit,
     viewModel: BookScreenViewModel = viewModel(
@@ -39,52 +39,57 @@ fun BookScreen(
         }
     )
 ) {
-    Column {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(0.9f),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-        ){
-            val book by viewModel.book.collectAsState()
-            Text(
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = "${book?.title}",
-            )
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue("${book?.author}", "Author")
-            LabeledMediaValue("${book?.format}", "Format")
-            LabeledMediaValue(
-                value = if(book?.numPages != 0L) book?.numPages.toString() else "",
-                label = "Num Pages"
-            )
-            LabeledMediaValue("${book?.genre}", "Genre")
-            LabeledMediaValue("${book?.notes}", "Notes")
+    if (id == null) {
+        Text("Loading...")
+    } else {
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize(0.9f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top,
+            ){
+                val book by viewModel.book.collectAsState()
+                Text(
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                    text = "${book?.title}",
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+                LabeledMediaValue("${book?.author}", "Author")
+                LabeledMediaValue("${book?.format}", "Format")
+                LabeledMediaValue(
+                    value = if(book?.numPages != 0L) book?.numPages.toString() else "",
+                    label = "Num Pages"
+                )
+                LabeledMediaValue("${book?.genre}", "Genre")
+                LabeledMediaValue("${book?.notes}", "Notes")
 
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {
-                    goBack()
-                    viewModel.deleteBook()
-                },
-            ) {
-                Text("Delete")
             }
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {goToCreateBook(id)}
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom,
             ) {
-                Text("Edit")
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {
+                        goBack()
+                        viewModel.deleteBook()
+                    },
+                ) {
+                    Text("Delete")
+                }
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {
+                        goToCreateBook(id)
+                    }
+                ) {
+                    Text("Edit")
+                }
             }
         }
     }
-
 }

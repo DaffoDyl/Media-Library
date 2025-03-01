@@ -14,7 +14,6 @@ import com.daffodyl.medialibrary.repositories.BoardGamesRepository
 import com.daffodyl.medialibrary.repositories.BooksRepository
 import com.daffodyl.medialibrary.repositories.MoviesRepository
 import com.daffodyl.medialibrary.repositories.VideoGamesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -35,23 +34,32 @@ class HomeScreenViewModel(
     val movies: StateFlow<List<Movie>> = _movies
     val videoGames: StateFlow<List<VideoGame>> = _videoGames
 
+    fun loadMedias() {
+        viewModelScope.launch {
+            boardGamesRepository.loadBoardGames()
+            booksRepository.loadBooks()
+            moviesRepository.loadMovies()
+            videoGamesRepository.loadVideoGames()
+        }
+    }
+
     init {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             boardGamesRepository.boardGames.collect {
                 _boardGames.value = it
             }
         }
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             booksRepository.books.collect {
                 _books.value = it
             }
         }
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             moviesRepository.movies.collect {
                 _movies.value = it
             }
         }
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             videoGamesRepository.videoGames.collect {
                 _videoGames.value = it
             }

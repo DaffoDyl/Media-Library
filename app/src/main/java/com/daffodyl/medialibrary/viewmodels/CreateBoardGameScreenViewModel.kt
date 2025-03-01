@@ -50,27 +50,29 @@ class CreateBoardGameScreenViewModel(
     }
 
     fun saveBoardGame() {
-        if (boardGameId != null) {
-            boardGamesRepository.updateBoardGame(
-                boardGameId,
-                _title.value,
-                _minPlayers.value,
-                _maxPlayers.value,
-                _genre.value,
-                _notes.value)
-        } else {
-            boardGamesRepository.addBoardGames(
-                _title.value,
-                _minPlayers.value,
-                _maxPlayers.value,
-                _genre.value,
-                _notes.value)
+        viewModelScope.launch(Dispatchers.Default) {
+            if (boardGameId != null) {
+                boardGamesRepository.updateBoardGame(
+                    boardGameId,
+                    _title.value,
+                    _minPlayers.value,
+                    _maxPlayers.value,
+                    _genre.value,
+                    _notes.value)
+            } else {
+                boardGamesRepository.addBoardGames(
+                    _title.value,
+                    _minPlayers.value,
+                    _maxPlayers.value,
+                    _genre.value,
+                    _notes.value)
+            }
         }
     }
 
     init {
         if (boardGameId != null) {
-            viewModelScope.launch(Dispatchers.Default) {
+            viewModelScope.launch {
                 boardGamesRepository.boardGames.collect { boardGames ->
                     val boardGame = boardGames.find { it.id == boardGameId }
                     if (boardGame != null) {

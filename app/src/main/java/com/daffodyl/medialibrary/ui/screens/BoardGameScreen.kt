@@ -28,7 +28,7 @@ import com.daffodyl.medialibrary.viewmodels.BoardGameScreenViewModel
 
 @Composable
 fun BoardGameScreen(
-    id: Long,
+    id: Long?,
     goBack: () -> Unit,
     goToCreateBoardGame: (id: Long) -> Unit,
     viewModel: BoardGameScreenViewModel = viewModel(
@@ -39,54 +39,59 @@ fun BoardGameScreen(
         }
     )
 ) {
-    Column {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(0.9f),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-        ){
-            val boardGame by viewModel.boardGame.collectAsState()
-            Text(
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = "${boardGame?.title}",
-            )
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue(
-                value = if(boardGame?.minPlayers != 0L) boardGame?.minPlayers.toString() else "",
-                label = "Min Players"
-            )
-            LabeledMediaValue(
-                value = if(boardGame?.maxPlayers != 0L) boardGame?.maxPlayers.toString() else "",
-                label = "Max Players"
-            )
-            LabeledMediaValue("${boardGame?.genre}", "Genre")
-            LabeledMediaValue("${boardGame?.notes}", "Notes")
+    if (id == null) {
+        Text("Loading...")
+    } else {
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize(0.9f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top,
+            ){
+                val boardGame by viewModel.boardGame.collectAsState()
+                Text(
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                    text = "${boardGame?.title}",
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+                LabeledMediaValue(
+                    value = if(boardGame?.minPlayers != 0L) boardGame?.minPlayers.toString() else "",
+                    label = "Min Players"
+                )
+                LabeledMediaValue(
+                    value = if(boardGame?.maxPlayers != 0L) boardGame?.maxPlayers.toString() else "",
+                    label = "Max Players"
+                )
+                LabeledMediaValue("${boardGame?.genre}", "Genre")
+                LabeledMediaValue("${boardGame?.notes}", "Notes")
 
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {
-                    goBack()
-                    viewModel.deleteBoardGame()
-                },
-            ) {
-                Text("Delete")
             }
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {goToCreateBoardGame(id)}
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom,
             ) {
-                Text("Edit")
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {
+                        goBack()
+                        viewModel.deleteBoardGame()
+                    },
+                ) {
+                    Text("Delete")
+                }
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {
+                        goToCreateBoardGame(id)
+                    }
+                ) {
+                    Text("Edit")
+                }
             }
         }
     }
-
 }

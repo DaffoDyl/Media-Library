@@ -28,7 +28,7 @@ import com.daffodyl.medialibrary.viewmodels.VideoGameScreenViewModel
 
 @Composable
 fun VideoGameScreen(
-    id: Long,
+    id: Long?,
     goBack: () -> Unit,
     goToCreateVideoGame: (id: Long) -> Unit,
     viewModel: VideoGameScreenViewModel = viewModel(
@@ -39,49 +39,53 @@ fun VideoGameScreen(
         }
     )
 ) {
-    Column {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(0.9f),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-        ){
-            val videoGame by viewModel.videoGame.collectAsState()
-            Text(
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = "${videoGame?.title}",
-            )
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue("${videoGame?.developer}", "Developer")
-            LabeledMediaValue("${videoGame?.genre}", "Genre")
-            LabeledMediaValue("${videoGame?.rating}", "Rating")
-            LabeledMediaValue("${videoGame?.platform}", "Platform")
-            LabeledMediaValue("${videoGame?.notes}", "Notes")
+    if (id == null) {
+        Text("Loading...")
+    } else {
 
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {
-                    goBack()
-                    viewModel.deleteVideoGame()
-                },
-            ) {
-                Text("Delete")
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize(0.9f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top,
+            ){
+                val videoGame by viewModel.videoGame.collectAsState()
+                Text(
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                    text = "${videoGame?.title}",
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+                LabeledMediaValue("${videoGame?.developer}", "Developer")
+                LabeledMediaValue("${videoGame?.genre}", "Genre")
+                LabeledMediaValue("${videoGame?.rating}", "Rating")
+                LabeledMediaValue("${videoGame?.platform}", "Platform")
+                LabeledMediaValue("${videoGame?.notes}", "Notes")
+
             }
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {goToCreateVideoGame(id)}
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom,
             ) {
-                Text("Edit")
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {
+                        goBack()
+                        viewModel.deleteVideoGame()
+                    },
+                ) {
+                    Text("Delete")
+                }
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {goToCreateVideoGame(id)}
+                ) {
+                    Text("Edit")
+                }
             }
         }
     }
-
 }

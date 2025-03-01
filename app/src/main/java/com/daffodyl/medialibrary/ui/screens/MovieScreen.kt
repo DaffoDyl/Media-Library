@@ -28,7 +28,7 @@ import com.daffodyl.medialibrary.viewmodels.MovieScreenViewModel
 
 @Composable
 fun MovieScreen(
-    id: Long,
+    id: Long?,
     goBack: () -> Unit,
     goToCreateMovie: (id: Long) -> Unit,
     viewModel: MovieScreenViewModel = viewModel(
@@ -39,52 +39,56 @@ fun MovieScreen(
         }
     )
 ) {
-    Column {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(0.9f),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-        ){
-            val movie by viewModel.movie.collectAsState()
-            Text(
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                text = "${movie?.title}",
-            )
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            Spacer(modifier = Modifier.height(8.dp))
-            LabeledMediaValue("${movie?.format}", "Format")
-            LabeledMediaValue("${movie?.rating}", "Rating")
-            LabeledMediaValue(
-                value = if(movie?.runtime != 0L) movie?.runtime.toString() else "",
-                label = "Run Time"
-            )
-            LabeledMediaValue("${movie?.genre}", "Genre")
-            LabeledMediaValue("${movie?.notes}", "Notes")
+    if (id == null) {
+        Text("Loading...")
+    } else {
 
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {
-                    goBack()
-                    viewModel.deleteMovie()
-                },
-            ) {
-                Text("Delete")
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize(0.9f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top,
+            ){
+                val movie by viewModel.movie.collectAsState()
+                Text(
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                    text = "${movie?.title}",
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+                LabeledMediaValue("${movie?.format}", "Format")
+                LabeledMediaValue("${movie?.rating}", "Rating")
+                LabeledMediaValue(
+                    value = if(movie?.runtime != 0L) movie?.runtime.toString() else "",
+                    label = "Run Time"
+                )
+                LabeledMediaValue("${movie?.genre}", "Genre")
+                LabeledMediaValue("${movie?.notes}", "Notes")
+
             }
-            Button(
-                modifier = Modifier.padding(8.dp),
-                onClick = {goToCreateMovie(id)}
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom,
             ) {
-                Text("Edit")
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {
+                        goBack()
+                        viewModel.deleteMovie()
+                    },
+                ) {
+                    Text("Delete")
+                }
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = {goToCreateMovie(id)}
+                ) {
+                    Text("Edit")
+                }
             }
         }
     }
-
 }
